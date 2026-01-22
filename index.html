@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+:root {
+  --crop: 50px;
+}
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.iframe-crop {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* key part */
+  position: relative;
+}
+
+.iframe-crop iframe {
+  width: 100%;
+  height: calc(100% + var(--crop)); /* compensate for shift */
+  border: none;
+  transform: translateY(calc(var(--crop) * -1)); /* crop top */
+}
+
+    </style>
+</head>
+<body>
+    <div class="iframe-crop">
+        <iframe
+          src="https://projectcoasthope.wixsite.com/projectfurgood"
+          loading="lazy">
+        </iframe>
+      </div>
+        <script>
+        // If device is mobile, set CSS var crop to 38px, else set CSS var crop to 50px
+        function setCropVar() {
+          var isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          var cropValue = isMobile ? '38px' : '50px';
+          document.documentElement.style.setProperty('--crop', cropValue);
+        }
+
+        setCropVar();
+        window.addEventListener('resize', setCropVar); // update if screen size changes
+        </script>
+</body>
+</html>
